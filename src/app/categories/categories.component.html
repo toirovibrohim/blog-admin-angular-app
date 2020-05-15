@@ -1,0 +1,115 @@
+ <!-- HEADER -->
+ <header id="main-header" class="py-2 bg-warning text-white">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h1><i class="fas fa-folder"></i> Categories</h1>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- ACTIONS -->
+<section id="actions" class="py-4 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 ml-auto">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search Categories...">
+                    <div class="input-group-append">
+                        <button class="btn btn-warning text-white">Search</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CATEGORIES -->
+<section id="categories" class="mt-4">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Latest Posts</h4>
+                    </div>
+                    <table class="table table-striped">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>#</th>
+                                <th>Title</th>
+                                <th>Date</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Post One</td>
+                                <td>November 10 2019</td>
+                                <td>
+                                    <a routerLink="/details" class="btn btn-secondary">
+                                    <i class="fas fa-angle-double-right"></i> Details
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Post Two</td>
+                                <td>November 10 2019</td>
+                                <td>
+                                    <a routerLink="/details" class="btn btn-secondary">
+                                    <i class="fas fa-angle-double-right"></i> Details
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>Post Three</td>
+                                <td>November 13 2019</td>
+                                <td>
+                                    <a routerLink="/details" class="btn btn-secondary">
+                                    <i class="fas fa-angle-double-right"></i> Details
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>Post Four</td>
+                                <td>November 15 2019</td>
+                                <td>
+                                    <a routerLink="/details" class="btn btn-secondary">
+                                    <i class="fas fa-angle-double-right"></i> Details
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- PAGINATION -->
+                <div class="d-flex justify-content-center mt-4">
+                    <nav>
+                        <ul class="pagination">
+                            <li class="page-item disabled">
+                                <a class="page-link">Previous</a>
+                            </li>
+                            <li class="page-item active">
+                                <a class="page-link">1</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link">2</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link">3</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link">Next</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

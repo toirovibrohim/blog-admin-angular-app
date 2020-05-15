@@ -1,0 +1,71 @@
+<!-- HEADER -->
+<header id="main-header" class="py-2 bg-primary text-white">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <h1><i class="fas fa-user mr-1"></i> Edit Profile</h1>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ACTIONS -->
+  <section id="actions" class="py-4 bg-light">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+          <a routerLink="/" class="btn btn-secondary btn-block">
+            <i class="fas fa-arrow-left"></i> Back To Dashboard
+          </a>
+        </div>
+        <div class="col-md-4">
+          <a routerLink="/" class="btn btn-success btn-block text-white">
+            <i class="fas fa-lock"></i> Change Password
+          </a>
+        </div>
+        <div class="col-md-4">
+          <a routerLink="/" class="btn btn-danger btn-block ">
+            <i class="fas fa-trash"></i> Delete Account
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- POSTS -->
+  <section id="posts" class="mt-4">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-9">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Edit Profile</h4>
+                </div>
+                <div class="card-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control" value="user">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" value="test@test.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="bio">Bio</label>
+                            <textarea name="editor1" class="form-control">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Cum assumenda repellat laboriosam ducimus ipsa blanditiis praesentium eos vel impedit nostrum sunt voluptate asperiores quo architecto, delectus consectetur, laudantium illo consequuntur id perspiciatis? Ea ducimus minima qui! Nobis, provident voluptatibus? Sit repudiandae reprehenderit modi veniam placeat odit quo praesentium incidunt id!</textarea>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <h3>Your Avatar</h3>
+            <img src="img/avatar.png" alt="" class="d-block img-fluid mb-3">
+            <button class="btn btn-primary btn-block mb-3">Edit Image</button>
+            <button class="btn btn-danger btn-block mb-3">Delete Image</button>
+        </div>
+      </div>
+    </div>
+  </section>
