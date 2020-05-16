@@ -32,7 +32,7 @@
             <div class="col">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Latest Posts</h4>
+                        <h4>Users</h4>
                     </div>
                     <table class="table table-striped">
                         <thead class="thead-dark">
@@ -44,41 +44,10 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Tom Abraham</td>
-                                <td>tomabraham@email.com</td>
-                                <td>
-                                    <a routerLink="/details" class="btn btn-secondary">
-                                    <i class="fas fa-angle-double-right"></i> Details
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>John Andy</td>
-                                <td>jandy@email.com</td>
-                                <td>
-                                    <a routerLink="/details" class="btn btn-secondary">
-                                    <i class="fas fa-angle-double-right"></i> Details
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>Sam Smith</td>
-                                <td>sam@email.com</td>
-                                <td>
-                                    <a routerLink="/details" class="btn btn-secondary">
-                                    <i class="fas fa-angle-double-right"></i> Details
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>Joe Remy</td>
-                                <td>joeremy@email.com</td>
-                                <td>
+                            <tr *ngFor="let user of users; let i = index" >
+                                <td [textContent]="i + 1"></td>
+                                <td [textContent]="user.name"></td>
+                                <td [textContent]="user.email"><td>
                                     <a routerLink="/details" class="btn btn-secondary">
                                     <i class="fas fa-angle-double-right"></i> Details
                                     </a>

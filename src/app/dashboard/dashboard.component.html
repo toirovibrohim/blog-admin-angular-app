@@ -52,66 +52,11 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>1</td>
-                <td>Post One</td>
-                <td>Web Development</td>
-                <td>November 10 2019</td>
-                <td>
-                  <a routerLink="/details" class="btn btn-secondary">
-                    <i class="fas fa-angle-double-right"></i> Details
-                  </a>
-                </td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>Post Two</td>
-                <td>Tech Gadgets</td>
-                <td>November 10 2019</td>
-                <td>
-                  <a routerLink="/details" class="btn btn-secondary">
-                    <i class="fas fa-angle-double-right"></i> Details
-                  </a>
-                </td>
-              </tr>
-              <tr>
-                <td>3</td>
-                <td>Post Three</td>
-                <td>Web Development</td>
-                <td>November 13 2019</td>
-                <td>
-                  <a routerLink="/details" class="btn btn-secondary">
-                    <i class="fas fa-angle-double-right"></i> Details
-                  </a>
-                </td>
-              </tr>
-              <tr>
-                <td>4</td>
-                <td>Post Four</td>
-                <td>Bussiness</td>
-                <td>November 15 2019</td>
-                <td>
-                  <a routerLink="/details" class="btn btn-secondary">
-                    <i class="fas fa-angle-double-right"></i> Details
-                  </a>
-                </td>
-              </tr>
-              <tr>
-                <td>5</td>
-                <td>Post Five</td>
-                <td>Web Development</td>
-                <td>November 16 2019</td>
-                <td>
-                  <a routerLink="/details" class="btn btn-secondary">
-                    <i class="fas fa-angle-double-right"></i> Details
-                  </a>
-                </td>
-              </tr>
-              <tr>
-                <td>6</td>
-                <td>Post Six</td>
-                <td>Health & Wellness</td>
-                <td>November 20 2019</td>
+              <tr *ngFor = "let post of postsList; let i = index">
+                <td [textContent]="i + 1"></td>
+                <td [textContent]="post.number">Post One</td>
+                <td [textContent]="post.category">Web Development</td>
+                <td [textContent]="post.date">November 10 2019</td>
                 <td>
                   <a routerLink="/details" class="btn btn-secondary">
                     <i class="fas fa-angle-double-right"></i> Details
@@ -121,43 +66,23 @@
             </tbody>
           </table>
           </div>
+
+          <!-- PAGINATION -->
+          <div class="d-flex justify-content-center mt-4" *ngIf = "show">
+            <ngb-pagination [collectionSize]="dashPosts.length" (pageChange)="onGetPage($event)" [pageSize]= "pageSize" [(page)]="page" aria-label="Default pagination"></ngb-pagination>
+          </div>
         </div>
+
+
 
         <div class="col-md-3">
-          <div class="card bg-primary text-white text-center mb-3">
-            <div class="card-body">
-              <h3>Posts</h3>
-              <h4 class="display-4">
-                <i class="fas fa-pencil-alt"></i> 6
-              </h4>
-              <a routerLink="/posts" class="btn btn-outline-light">View</a>
-          </div>
+          <app-box-card icon="fa-pencil-alt" bgColor="bg-primary" headerName="Posts" postCount="6" link="/posts"></app-box-card>
+          <app-box-card icon="fa-folder" bgColor="bg-warning" headerName="Categories" postCount="4" link="/categories"></app-box-card>
+          <app-box-card icon="fa-users" bgColor="bg-danger" headerName="Users" postCount="4" link="/users"></app-box-card>
         </div>
-
-        <div class="card bg-warning text-white text-center mb-3">
-          <div class="card-body">
-            <h3>Categories</h3>
-            <h4 class="display-4">
-              <i class="fas fa-folder"></i> 4
-            </h4>
-            <a routerLink="/categories" class="btn btn-outline-light">View</a>
-          </div>
-        </div>
-
-        <div class="card bg-danger text-white text-center mb-3">
-          <div class="card-body">
-            <h3>Users</h3>
-            <h4 class="display-4">
-              <i class="fas fa-users"></i> 4
-            </h4>
-            <a routerLink="/users" class="btn btn-outline-light">View</a>
-          </div>
-        </div>
-
 
       </div>
     </div>
-  </div>
 </section>
 
 
@@ -196,7 +121,7 @@
       </div>
       <div class="form-group">
         <label for="body">Body</label>
-        <textarea [editor]="editor" class="form-control"></textarea>
+        <textarea class="form-control"></textarea>
       </div>
     </form>
   </div>
@@ -224,7 +149,7 @@
   </div>
   <div class="modal-footer">
     <button class="btn btn-warning text-white" (click)="close()">Save Changes</button>
-  </div>   
+  </div>
 </ng-template>
 
 <ng-template #userModal>

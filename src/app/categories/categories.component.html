@@ -32,7 +32,7 @@
             <div class="col">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Latest Posts</h4>
+                        <h4>Categories</h4>
                     </div>
                     <table class="table table-striped">
                         <thead class="thead-dark">
@@ -44,40 +44,10 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Post One</td>
-                                <td>November 10 2019</td>
-                                <td>
-                                    <a routerLink="/details" class="btn btn-secondary">
-                                    <i class="fas fa-angle-double-right"></i> Details
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Post Two</td>
-                                <td>November 10 2019</td>
-                                <td>
-                                    <a routerLink="/details" class="btn btn-secondary">
-                                    <i class="fas fa-angle-double-right"></i> Details
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>Post Three</td>
-                                <td>November 13 2019</td>
-                                <td>
-                                    <a routerLink="/details" class="btn btn-secondary">
-                                    <i class="fas fa-angle-double-right"></i> Details
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>Post Four</td>
-                                <td>November 15 2019</td>
+                            <tr *ngFor ="let category of categoriesList; let i = index">
+                                <td [textContent]="i + 1"></td>
+                                <td [textContent]="category.number"></td>
+                                <td [textContent]="category.date"></td>
                                 <td>
                                     <a routerLink="/details" class="btn btn-secondary">
                                     <i class="fas fa-angle-double-right"></i> Details
@@ -88,26 +58,8 @@
                     </table>
                 </div>
                 <!-- PAGINATION -->
-                <div class="d-flex justify-content-center mt-4">
-                    <nav>
-                        <ul class="pagination">
-                            <li class="page-item disabled">
-                                <a class="page-link">Previous</a>
-                            </li>
-                            <li class="page-item active">
-                                <a class="page-link">1</a>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link">2</a>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link">3</a>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link">Next</a>
-                            </li>
-                        </ul>
-                    </nav>
+                <div class="d-flex justify-content-center mt-4" *ngIf = "show">
+                  <ngb-pagination [collectionSize]="categories.length" (pageChange)="onGetPage($event)" [pageSize]= "pageSize" [(page)]="page" aria-label="Default pagination"></ngb-pagination>
                 </div>
             </div>
         </div>

@@ -13,6 +13,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { BoxCardComponent } from './box-card/box-card.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
     ProfileComponent,
     SettingsComponent,
     DashboardComponent,
+    BoxCardComponent,
   ],
   imports: [
     BrowserModule,

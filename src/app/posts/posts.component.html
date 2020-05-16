@@ -45,66 +45,11 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Post One</td>
-                                <td>Web Development</td>
-                                <td>November 10 2019</td>
-                                <td>
-                                    <a routerLink="/details" class="btn btn-secondary">
-                                    <i class="fas fa-angle-double-right"></i> Details
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Post Two</td>
-                                <td>Tech Gadgets</td>
-                                <td>November 10 2019</td>
-                                <td>
-                                    <a routerLink="/details" class="btn btn-secondary">
-                                    <i class="fas fa-angle-double-right"></i> Details
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>Post Three</td>
-                                <td>Web Development</td>
-                                <td>November 13 2019</td>
-                                <td>
-                                    <a routerLink="/details" class="btn btn-secondary">
-                                    <i class="fas fa-angle-double-right"></i> Details
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>Post Four</td>
-                                <td>Bussiness</td>
-                                <td>November 15 2019</td>
-                                <td>
-                                    <a routerLink="/details" class="btn btn-secondary">
-                                    <i class="fas fa-angle-double-right"></i> Details
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>5</td>
-                                <td>Post Five</td>
-                                <td>Web Development</td>
-                                <td>November 16 2019</td>
-                                <td>
-                                    <a routerLink="/details" class="btn btn-secondary">
-                                    <i class="fas fa-angle-double-right"></i> Details
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>6</td>
-                                <td>Post Six</td>
-                                <td>Health & Wellness</td>
-                                <td>November 20 2019</td>
+                            <tr *ngFor = "let post of postsList; let i = index">
+                                <td [textContent]="i + 1"></td>
+                                <td [textContent]= "post.number"></td>
+                                <td [textContent]= "post.category"></td>
+                                <td [textContent]= "post.date">November 10 2019</td>
                                 <td>
                                     <a routerLink="/details" class="btn btn-secondary">
                                     <i class="fas fa-angle-double-right"></i> Details
@@ -115,26 +60,8 @@
                     </table>
                 </div>
                 <!-- PAGINATION -->
-                <div class="d-flex justify-content-center mt-4">
-                    <nav>
-                        <ul class="pagination">
-                            <li class="page-item disabled">
-                                <a class="page-link">Previous</a>
-                            </li>
-                            <li class="page-item active">
-                                <a class="page-link">1</a>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link">2</a>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link">3</a>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link">Next</a>
-                            </li>
-                        </ul>
-                    </nav>
+                <div class="d-flex justify-content-center mt-4" *ngIf = "show">
+                  <ngb-pagination [collectionSize]="posts.length" (pageChange)="onGetPage($event)" [pageSize]= "pageSize" [(page)]="page" aria-label="Default pagination"></ngb-pagination>
                 </div>
             </div>
         </div>
