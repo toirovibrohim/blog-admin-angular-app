@@ -119,8 +119,13 @@
               "devServerTarget": "blogen-app:serve:production"
             }
           }
+        },
+        "deploy": {
+          "builder": "angular-cli-ghpages:deploy",
+          "options": {}
         }
       }
-    }},
+    }
+  },
   "defaultProject": "blogen-app"
 }
