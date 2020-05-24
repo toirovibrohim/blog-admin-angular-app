@@ -1,10 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-
-interface IPost {
-  number: string;
-  category: string;
-  date: string;
-}
+import { PostService } from './../services/posts.service';
+import { Component, OnInit, ɵCompiler_compileModuleSync__POST_R3__ } from '@angular/core';
+import { CategoryService } from '../services/categories.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-posts',
@@ -12,58 +9,70 @@ interface IPost {
   styleUrls: ['./posts.component.css']
 })
 export class PostsComponent implements OnInit {
-  public posts: IPost[] = [
-    {
-      number: "Post One",
-      category: "Web Development",
-      date: "November 10 2019"
-    },
-    {
-      number: "Post Two",
-      category: "Tech Gadgets",
-      date: "November 10 2019"
-    },
-    {
-      number: "Post Three",
-      category: "Web Development",
-      date: "November 13 2019"
-    },
-    {
-      number: "Post Four",
-      category: "Bussiness",
-      date: "November 15 2019"
-    },
-    {
-      number: "Post Five",
-      category: "Web Development",
-      date: "November 16 2019"
-    },
-    {
-      number: "Post Six",
-      category: "Health & Wellness",
-      date: "November 20 2019"
-    },
-  ];
+  posts;
+  searchValue;
+  postsResult;
+  notFound = false;
+  showPosts = true;
 
   page = 1;
   pageSize = 5;
-  postsList: IPost[];
+  postsList;
   show = false;
 
-  constructor() { }
+  constructor(private categoryService: CategoryService,
+    private postService: PostService,
+    private router: Router ) { }
 
   ngOnInit(): void {
-    this.postsList = this.posts.slice(0, this.pageSize);
-    if (this.posts.length > 5) {
-      this.show = true;
+    this.getPosts()
+  }
+
+  getPosts() {
+    this.postService.getAllPosts()
+    .then(data => {
+      console.log(data);
+      this.posts = data;
+      this.postsList = this.posts.slice(0, this.pageSize);
+      if (this.posts.length > 5) {
+        this.show = true;
+      }
+    });
+  }
+
+  searchPosts() {
+    const arr = this.posts.filter((data) => {
+      const name = data.title.toLowerCase();
+      const value = this.searchValue.toLowerCase();
+      if (name.includes(value)) {
+        this.notFound = false;
+        return true;
+      } else {
+        return false;
+      }
+    });
+    if (!arr.length) {
+      this.notFound = true;
+    } else {
+      this.postsResult = arr;
+      this.postsList = this.postsResult.slice(0, this.pageSize);
+      this.showPosts = false;
     }
+  }
+
+  getCategories() {
+    this.categoryService.getAllCategories();
   }
 
   onGetPage(value: number) {
     this.page = value;
-
-    const start = (this.page - 1) * this.pageSize;
-    this.postsList = this.posts.slice(start, start + this.pageSize);
+    if (this.showPosts) {
+      const start = (this.page - 1) * this.pageSize;
+      this.postsList = this.posts.slice(start, start + this.pageSize);
+    }
   }
 
+  onNavigate(id: number) {
+    this.router.navigate(['/posts/' + id, 'details']);
+  }
 }

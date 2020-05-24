@@ -1,12 +1,11 @@
+import { PostService } from './../services/posts.service';
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CKEditorModule  } from '@ckeditor/ckeditor5-angular/ckeditor.module';
+import { UserService } from '../services/user.service';
+import { CategoryService } from '../services/categories.service';
+import { FormGroup, FormControl } from '@angular/forms';
 
-interface IDashPost {
-  number: string;
-  category: string;
-  date: string;
-}
 
 @Component({
   selector: 'app-dashboard',
@@ -15,51 +14,54 @@ interface IDashPost {
 })
 export class DashboardComponent implements OnInit {
   public editor: CKEditorModule;
-  constructor(private modalService: NgbModal) { }
+  postDetails: FormGroup;
+  newPost: any;
+  constructor(private modalService: NgbModal, private categoryService: CategoryService,
+    private userService: UserService, private postService: PostService) { }
 
-  dashPosts: IDashPost[] = [
-    {
-      number: "Post One",
-      category: "Web Development",
-      date: "November 10 2019",
-    },
-    {
-      number: "Post Two",
-      category: "Tech Gadgets",
-      date: "November 10 2019",
-    },
-    {
-      number: "Post Three",
-      category: "Web Development",
-      date: "November 13 2019",
-    },
-    {
-      number: "Post Four",
-      category: "Bussiness",
-      date: "November 15 2019",
-    },
-    {
-      number: "Post Five",
-      category: "Web Development",
-      date: "November 16 2019",
-    },
-    {
-      number: "Post Six",
-      category: "Heath & Wellness",
-      date: "November 20 2019",
-    },
-  ];
+  dashPosts;
 
   page = 1;
   pageSize = 5;
-  postsList: IDashPost[];
+  postsList;
+  categoriesList;
+  usersList;
   show = false;
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+    this.postDetails = new FormGroup({
+      title: new FormControl(),
+      body: new FormControl(),
+      selectedCategory: new FormControl(),
+      selectedUser: new FormControl(),
+    });
+    this.postDetails.valueChanges.subscribe(value => this.newPost = value);
+    await this.getAllData();
     this.postsList = this.dashPosts.slice(0, this.pageSize);
     if (this.dashPosts.length > 5) {
       this.show = true;
     }
+  }
+
+  async getAllData() {
+    this.dashPosts = await this.postService.getAllPosts();
+    this.categoriesList = await this.categoryService.getAllCategories();
+    this.usersList = await this.userService.getAllUsers();
+  }
+
+  onSavePost() {
+    const newPost = {
+      title: this.newPost.title,
+      body: this.newPost.body,
+      category_id: this.newPost.selectedCategory.id,
+      created_by: this.newPost.selectedUser.id
+    };
+    this.postService.addPost(newPost)
+      .then(data => {
+        this.getAllData();
+        this.close();
+      });
+
   }
 
   onGetPage(value: number) {

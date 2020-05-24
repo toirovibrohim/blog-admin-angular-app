@@ -15,9 +15,9 @@
         <div class="row">
             <div class="col-md-6 ml-auto">
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search Users...">
+                    <input type="text" class="form-control" [(ngModel)]=searchValue>
                     <div class="input-group-append">
-                        <button class="btn btn-danger">Search</button>
+                        <button [disabled]="!searchValue" class="btn btn-danger" (click)="search()">Search</button>
                     </div>
                 </div>
             </div>
@@ -26,7 +26,7 @@
 </section>
 
 <!-- USERS -->
-<section id="users" class="mt-4">
+<section *ngIf="!notFound" id="users" class="mt-4">
     <div class="container">
         <div class="row">
             <div class="col">
@@ -44,19 +44,30 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let user of users; let i = index" >
-                                <td [textContent]="i + 1"></td>
+                            <tr *ngFor="let user of usersList; let i = index" >
+                                <td [textContent]='i + 1 + ((page - 1) * pageSize)'></td>
                                 <td [textContent]="user.name"></td>
                                 <td [textContent]="user.email"><td>
-                                    <a routerLink="/details" class="btn btn-secondary">
+                                    <!-- <a routerLink="{{ user.id }}/details" class="btn btn-secondary"> -->
+                                    <button (click)="onNavigate(user.id)" class="btn btn-secondary">
                                     <i class="fas fa-angle-double-right"></i> Details
-                                    </a>
+                                    </button>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
+                <!-- PAGINATION -->
+              <div class="d-flex justify-content-center mt-4" *ngIf = "show">
+                <ngb-pagination [collectionSize]="(showUsers) ? users.length : usersResult.length" (pageChange)="onGetPage($event)" [pageSize]= "pageSize" [(page)]="page" aria-label="Default pagination"></ngb-pagination>
+              </div>
             </div>
         </div>
     </div>
 </section>
+
+<div *ngIf="notFound" class="container">
+  <div class="col">
+    <h1 class="display-5">User not found!</h1>
+  </div>
+</div>

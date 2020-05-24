@@ -1,0 +1,86 @@
+ <!-- HEADER -->
+ <header id="main-header" class="py-2 bg-primary text-white">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <h1>Post Details</h1>
+      </div>
+    </div>
+  </div>
+</header>
+
+
+<!-- ACTIONS -->
+<section id="actions" class="py-4 bg-light">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <button routerLink="/posts" class="btn btn-secondary btn-block">
+          <i class="fas fa-arrow-left"></i> Back To Posts
+        </button>
+      </div>
+      <div *ngIf="!deleted" class="col">
+        <button class="btn btn-success btn-block text-white" (click)='onSave()'>
+          <i class="fas fa-check"></i> Save Changes
+        </button>
+      </div>
+      <div *ngIf="!deleted" class="col">
+        <button class="btn btn-danger btn-block" (click)='onDelete()'>
+          <i class="fas fa-trash"></i> Delete Post
+        </button>
+      </div>
+      <div  *ngIf="deleted" class="col">
+        <h3 class="display-5 text-danger">POST WAS DELETED</h3>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <ngb-alert *ngIf="saved" type="success" (click)="onClickClose()"> SAVED </ngb-alert>
+    </div>
+  </div>
+</div>
+
+  <!-- ACTIONS -->
+  <section *ngIf="!deleted" id="actions" class="mt-4">
+      <div class="container">
+          <div class="row">
+              <div class="col">
+                  <div class="card">
+                      <div class="card-header">
+                          <h4>Edit Post Details</h4>
+                      </div>
+                      <div class="card-body">
+                          <form [formGroup] = "postDetails">
+                              <div class="form-group">
+                                  <label for="title">title</label>
+                                  <input type="text" class="form-control" formControlName='title'>
+                              </div>
+                              <div class="form-group">
+                                <label for="title">Created By</label>
+                                <select type="text" class="form-control" formControlName='selectedUser'>
+                                  <option *ngFor="let user of users" [ngValue]="user"> {{ user?.name }} </option>
+                              </select>
+                              </div>
+                              <div class="form-group">
+                                <label for="title">Category</label>
+                                <select type="text" class="form-control" formControlName='selectedCategory'>
+                                  <option *ngFor="let category of categories" [ngValue]="category"> {{ category?.title }} </option>
+                              </select>
+                              </div>
+                              <div class="form-group">
+                                <label for="title">Body</label>
+                                <textarea class="form-control" formControlName="body"></textarea>
+                              </div>
+                          </form>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
+
+

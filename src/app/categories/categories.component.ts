@@ -1,9 +1,6 @@
+import { Router } from '@angular/router';
+import { CategoryService } from './../services/categories.service';
 import { Component, OnInit } from '@angular/core';
-
-interface ICategory {
-  number: string;
-  date: string;
-}
 
 @Component({
   selector: 'app-categories',
@@ -11,90 +8,66 @@ interface ICategory {
   styleUrls: ['./categories.component.css']
 })
 export class CategoriesComponent implements OnInit {
-  categories: ICategory[] = [
-    {
-      number: "Post One",
-      date: "November 10 2019",
-    },
-    {
-      number: "Post Two",
-      date: "November 14 2019",
-    },
-    {
-      number: "Post Three",
-      date: "November 18 2019"
-    },
-    {
-      number: "Post Four",
-      date: "November 19 2019",
-    },
-    {
-      number: "Post Five",
-      date: "November 22 2019",
-    },
-    {
-      number: "Post Six",
-      date: "November 30 2019",
-    },
-    {
-      number: "Post Seven",
-      date: "November 31 2019",
-    },
-    {
-      number: "Post Eight",
-      date: "December 5 2019"
-    },
-    {
-      number: "Post Nine",
-      date: "December 19 2019",
-    },
-    {
-      number: "Post Ten",
-      date: "December 22 2019",
-    },
-    {
-      number: "Post Eleven",
-      date: "January 9 2020",
-    },
-    {
-      number: "Post Twelve",
-      date: "January 14 2020",
-    },
-    {
-      number: "Post Thirteen",
-      date: "January 16 2020"
-    },
-    {
-      number: "Post Fourteen",
-      date: "January 15 2020",
-    },
-    {
-      number: "Post Fifteen",
-      date: "January 26 2020",
-    },
-  ];
+  categories;
+  searchValue;
+  categoriesResult;
+  notFound = false;
+  showCategories = true;
 
   page = 1;
   pageSize = 5;
-  categoriesList: ICategory[];
+  categoriesList;
   show = false;
 
-  constructor() { }
+
+  constructor(private categoryService: CategoryService,
+              private router: Router ) { }
 
   ngOnInit(): void {
-    this.categoriesList = this.categories.slice(0, this.pageSize);
-    if (this.categories.length > 5) {
-      this.show = true;
+    this.categoryService.getAllCategories()
+      .then(data => {
+        this.categories = data;
+        this.categoriesList = this.categories.slice(0, this.pageSize);
+        if (this.categories.length > 5) {
+          this.show = true;
+        }
+      });
+  }
+
+  searchCategory() {
+    const arr = this.categories.filter((data) => {
+      const name = data.title.toLowerCase();
+      const value = this.searchValue.toLowerCase();
+      if (name.includes(value)) {
+        this.notFound = false;
+        return true;
+      } else {
+        return false;
+      }
+    });
+    if (!arr.length) {
+      this.notFound = true;
+    } else {
+      this.categoriesResult = arr;
+      this.categoriesList = this.categoriesResult.slice(0, this.pageSize);
+      this.showCategories = false;
     }
+  }
+
+  getCategories() {
+    this.categoryService.getAllCategories();
   }
 
   onGetPage(value: number) {
     this.page = value;
-
-    const start = (this.page - 1) * this.pageSize;
-    this.categoriesList = this.categories.slice(start, start + this.pageSize);
+    if (this.showCategories) {
+      const start = (this.page - 1) * this.pageSize;
+      this.categoriesList = this.categories.slice(start, start + this.pageSize);
+    }
   }
 
-
+  onNavigate(id: number) {
+    this.router.navigate(['/categories/' + id, 'details']);
+  }
 
 }

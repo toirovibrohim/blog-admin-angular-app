@@ -1,0 +1,78 @@
+ <!-- HEADER -->
+ <header id="main-header" class="py-2 bg-primary text-white">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <h1>User Details</h1>
+      </div>
+    </div>
+  </div>
+</header>
+
+
+<!-- ACTIONS -->
+<section id="actions" class="py-4 bg-light">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <button routerLink="/users" class="btn btn-secondary btn-block">
+          <i class="fas fa-arrow-left"></i> Back To Userslist
+        </button>
+      </div>
+      <div *ngIf="!deleted" class="col">
+        <button class="btn btn-success btn-block text-white" (click)='onSaveUser()'>
+          <i class="fas fa-check"></i> Save Changes
+        </button>
+      </div>
+      <div *ngIf="!deleted" class="col">
+        <button class="btn btn-danger btn-block" (click)='onDeleteUser()'>
+          <i class="fas fa-trash"></i> Delete User
+        </button>
+      </div>
+      <div  *ngIf="deleted" class="col">
+        <h3 class="display-5 text-danger">USER WAS DELETED</h3>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <ngb-alert *ngIf="saved" type="success" (click)="onClickClose()"> SAVED </ngb-alert>
+    </div>
+  </div>
+</div>
+
+  <!-- ACTIONS -->
+  <section *ngIf="!deleted" id="actions" class="mt-4">
+      <div class="container">
+          <div class="row">
+              <div class="col">
+                  <div class="card">
+                      <div class="card-header">
+                          <h4>Edit User Details</h4>
+                      </div>
+                      <div class="card-body">
+                          <form [formGroup] = "userDetails">
+                              <div class="form-group">
+                                  <label for="title">Name</label>
+                                  <input type="text" class="form-control" formControlName='name'>
+                              </div>
+                              <div class="form-group">
+                                <label for="title">Email</label>
+                                <input type="email" class="form-control" formControlName='email'>
+                            </div>
+                              <div class="form-group">
+                                  <label for="body">Bio</label>
+                                  <textarea name="editor1" class="form-control" formControlName='bio'>{{ user?.bio }}</textarea>
+                              </div>
+                          </form>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
+
+

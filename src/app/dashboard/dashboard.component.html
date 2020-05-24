@@ -53,12 +53,12 @@
             </thead>
             <tbody>
               <tr *ngFor = "let post of postsList; let i = index">
-                <td [textContent]="i + 1"></td>
-                <td [textContent]="post.number">Post One</td>
-                <td [textContent]="post.category">Web Development</td>
-                <td [textContent]="post.date">November 10 2019</td>
+                <td [textContent]="i + 1 + ((page -1 ) * pageSize)"></td>
+                <td [textContent]="post.title">Post One</td>
+                <td [textContent]="post.categories.title">Web Development</td>
+                <td [textContent]="post.created_at">November 10 2019</td>
                 <td>
-                  <a routerLink="/details" class="btn btn-secondary">
+                  <a routerLink="posts/{{post.id}}/details" class="btn btn-secondary">
                     <i class="fas fa-angle-double-right"></i> Details
                   </a>
                 </td>
@@ -76,9 +76,9 @@
 
 
         <div class="col-md-3">
-          <app-box-card icon="fa-pencil-alt" bgColor="bg-primary" headerName="Posts" postCount="6" link="/posts"></app-box-card>
-          <app-box-card icon="fa-folder" bgColor="bg-warning" headerName="Categories" postCount="4" link="/categories"></app-box-card>
-          <app-box-card icon="fa-users" bgColor="bg-danger" headerName="Users" postCount="4" link="/users"></app-box-card>
+          <app-box-card icon="fa-pencil-alt" bgColor="bg-primary" headerName="Posts" postCount="{{dashPosts?.length}}" link="/posts"></app-box-card>
+          <app-box-card icon="fa-folder" bgColor="bg-warning" headerName="Categories" postCount="{{categoriesList?.length}}" link="/categories"></app-box-card>
+          <app-box-card icon="fa-users" bgColor="bg-danger" headerName="Users" postCount="{{usersList?.length}}" link="/users"></app-box-card>
         </div>
 
       </div>
@@ -97,36 +97,31 @@
     </div>
   </div>
   <div class="modal-body">
-    <form>
+    <form [formGroup] = "postDetails">
       <div class="form-group">
-        <label for="title">Title</label>
-        <input type="text" class="form-control" placeholder="Enter Title">
+          <label for="title">title</label>
+          <input type="text" class="form-control" formControlName='title'>
       </div>
       <div class="form-group">
-        <label for="category">Category</label>
-        <select type="text" class="form-control">
-          <option value="">Web Development</option>
-          <option value="">Tech Gadgets</option>
-          <option value="">Bussiness</option>
-          <option value="">Health & Wellness</option>
-        </select>
+        <label for="title">Created By</label>
+        <select type="text" class="form-control" formControlName='selectedUser'>
+          <option *ngFor="let user of usersList" [ngValue]="user"> {{ user?.name }} </option>
+      </select>
       </div>
       <div class="form-group">
-        <label for="image">Upload Image</label>
-        <div class="custom-file">
-            <input type="file" class="custom-file-input">
-            <label for="image" class="custom-file-label">Choose File</label>
-        </div>
-        <small class="form-text text-muted">Max Size 3mb</small>
+        <label for="title">Category</label>
+        <select type="text" class="form-control" formControlName='selectedCategory'>
+          <option *ngFor="let category of categoriesList" [ngValue]="category"> {{ category?.title }} </option>
+      </select>
       </div>
       <div class="form-group">
-        <label for="body">Body</label>
-        <textarea class="form-control"></textarea>
+        <label for="title">Body</label>
+        <textarea class="form-control" formControlName="body"></textarea>
       </div>
-    </form>
+  </form>
   </div>
   <div class="modal-footer">
-    <button class="btn btn-primary text-white" (click)="close()">Save Changes</button>
+    <button class="btn btn-primary text-white" (click)="onSavePost()">Save Changes</button>
   </div>
 </ng-template>
 

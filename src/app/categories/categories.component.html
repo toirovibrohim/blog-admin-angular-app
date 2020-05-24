@@ -15,9 +15,9 @@
         <div class="row">
             <div class="col-md-6 ml-auto">
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search Categories...">
+                    <input [(ngModel)]="searchValue" type="text" class="form-control" placeholder="Search Categories...">
                     <div class="input-group-append">
-                        <button class="btn btn-warning text-white">Search</button>
+                        <button (click)="searchCategory()" [disabled]="!searchValue" class="btn btn-warning text-white">Search</button>
                     </div>
                 </div>
             </div>
@@ -26,7 +26,7 @@
 </section>
 
 <!-- CATEGORIES -->
-<section id="categories" class="mt-4">
+<section *ngIf="!notFound" id="categories" class="mt-4">
     <div class="container">
         <div class="row">
             <div class="col">
@@ -38,20 +38,23 @@
                         <thead class="thead-dark">
                             <tr>
                                 <th>#</th>
-                                <th>Title</th>
-                                <th>Date</th>
+                                <th>Category</th>
+                                <th>Created by</th>
+                                <th>Created Date</th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr *ngFor ="let category of categoriesList; let i = index">
-                                <td [textContent]="i + 1"></td>
-                                <td [textContent]="category.number"></td>
-                                <td [textContent]="category.date"></td>
+                                <td [textContent]="i + 1 + ((page -1 ) * pageSize)"></td>
+                                <td [textContent]="category.title"></td>
+                                <td [textContent]="category.users.name"></td>
+                                <td [textContent]="category.created_at"></td>
                                 <td>
-                                    <a routerLink="/details" class="btn btn-secondary">
+                                    <!-- <a routerLink="/categories/" class="btn btn-secondary"> -->
+                                    <button (click)="onNavigate(category.id)" class="btn btn-secondary">
                                     <i class="fas fa-angle-double-right"></i> Details
-                                    </a>
+                                    </button>
                                 </td>
                             </tr>
                         </tbody>
@@ -59,9 +62,16 @@
                 </div>
                 <!-- PAGINATION -->
                 <div class="d-flex justify-content-center mt-4" *ngIf = "show">
-                  <ngb-pagination [collectionSize]="categories.length" (pageChange)="onGetPage($event)" [pageSize]= "pageSize" [(page)]="page" aria-label="Default pagination"></ngb-pagination>
+                  <ngb-pagination [collectionSize]="(showCategories) ? categories.length : categoriesResult.length" (pageChange)="onGetPage($event)" [pageSize]= "pageSize" [(page)]="page" aria-label="Default pagination"></ngb-pagination>
                 </div>
             </div>
         </div>
     </div>
 </section>
+
+<div *ngIf="notFound" class="container">
+  <div class="col">
+    <h1 class="display-5">Category not found!</h1>
+  </div>
+</div>
+
